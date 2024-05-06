@@ -1,21 +1,24 @@
-html, body, #root {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+html,
+body,
+#root {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-.main-screen {
-  border-top: 5px solid transparent;
-  border-width: 1px;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #3ccde1, #04eac0, #d762f7, #bb62ff);
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 .bg-top-gradient-border {
-  background-image: linear-gradient(to right, #6deeff, #6fffe5, #51f9ff, #d762f7);
+	background-image: linear-gradient(
+		to right,
+		#3485ff,
+		#6fffe5,
+		#51f9ff,
+		#d762f7
+	);
 }

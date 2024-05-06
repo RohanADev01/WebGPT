@@ -1,0 +1,13 @@
+.bg-top-gradient-border {
+	background-image: linear-gradient(
+		to right,
+		#3485ff,
+		#6fffe5,
+		#51f9ff,
+		#d762f7
+	);
+}
+
+#chat-send-btn:disabled {
+	cursor: pointer;
+}
