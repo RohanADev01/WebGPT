@@ -3,24 +3,34 @@ import Sidebar from './Dashboard/Sidebar';
 import Dashboard from './Dashboard/Dashboard';
 import axios from 'axios';
 import './App.css';
+import { backendURL } from './constants';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1140);
-  const [currentModel, setCurrentModel] = useState('GPT-3.5');
+  const [currentModel, setCurrentModel] = useState('gpt-3.5');
   const [chatHistory, setChatHistory] = useState([]);
-  const [response, setResponse] = useState('');
+  // const [response, setResponse] = useState('');
   const [input, setInput] = useState("");
-  const models = ['GPT-3.5', 'GPT-3.5-turbo', 'GPT-4', 'GPT-4-turbo', 'GPT-3.5-turbo-16k', 'GPT-3.5-turbo-16k-0309', 'GPT-3.5-turbo-13b'];
+  const [openAIkey, setOpenAIKey] = useState("");
+  const models = ['gpt-3.5', 'gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo-16k', 'gpt-3.5-turbo-16k-0309', 'gpt-3.5-turbo-13b'];
 
   useEffect(() => {
-    fetchChatHistory();
-  }, []);
+    if (openAIkey !== "") {
+      fetchChatHistory();
+    }
+  }, [openAIkey]);
 
   const fetchChatHistory = async () => {
+    const url = `${backendURL}/api/chat`
     try {
-      const response = await axios.post('/api/chat', {
+      const response = await axios.post(url, {
         user_input: "",
-        model_name: currentModel
+        model_name: currentModel,
+        openai_api_key: openAIkey,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       })
       setChatHistory(response.data.chat_history);
     } catch (error) {
@@ -29,12 +39,18 @@ function App() {
   }
 
   const sendMessage = async () => {
+    const url = `${backendURL}/api/chat`
     try {
-      const response = await axios.post("/api/chat", {
+      const response = await axios.post(url, {
         user_input: input,
         model_name: currentModel,
+        openai_api_key: openAIkey,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
-      setResponse(response.data.response);
+      // setResponse(response.data.response);
       setChatHistory(response.data.chat_history);
       setInput("");
     } catch (error) {
@@ -43,10 +59,15 @@ function App() {
   };
 
   const clearChat = async () => {
+    const url = `${backendURL}/api/clear`
     try {
-      await axios.post("/api/clear");
+      await axios.post(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       setChatHistory([]);
-      setResponse("");
+      // setResponse("");
       setInput("");
     } catch (error) {
       console.error("Error clearing chat:", error);
@@ -76,13 +97,17 @@ function App() {
     setCurrentModel(newModel);
   }
 
+  const handleChangeOpenAIKey = (newKey) => {
+    setOpenAIKey(newKey);
+  }
+
   return (
     <>
       <div className="relative flex h-full w-screen">
         <div className="absolute inset-x-0 top-0 h-2px bg-top-gradient-border"></div>
-        <Sidebar clearChat={clearChat} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} currentModel={currentModel} handleChangeModel={handleChangeModel} models={models} />
+        <Sidebar clearChat={clearChat} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} currentModel={currentModel} handleChangeModel={handleChangeModel} models={models} handleChangeOpenAIKey={handleChangeOpenAIKey} />
         <div className="absolute inset-x-0 top-0 h-2px bg-top-gradient-border"></div>
-        <Dashboard isSidebarOpen={isSidebarOpen} currentModel={currentModel} chatHistory={chatHistory} />
+        <Dashboard currentModel={currentModel} chatHistory={chatHistory} sendMessage={sendMessage} openAIkey={openAIkey} />
       </div>
     </>
   );
