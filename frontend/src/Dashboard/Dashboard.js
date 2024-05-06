@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './dashboard.css'
 import { IoMdSend } from "react-icons/io";
 
-const Dashboard = ({ isSidebarOpen }) => {
+const Dashboard = ({ isSidebarOpen, chatHistory }) => {
   const [sendEnabled, setSendEnabled] = useState(false);
 
   function chatInputChange(e) {
@@ -21,7 +21,14 @@ const Dashboard = ({ isSidebarOpen }) => {
         <div className='flex flex-col border-white-100 border-2 h-full rounded-lg'>
           <div className='p-10 flex-grow'>
             <h1>Dashboard</h1>
-            <p>Main content area.</p>
+            {/* Main content area. */}
+            <div>
+              {chatHistory.map((msg, idx) => (
+                <div key={idx} className={msg.role}>
+                  {msg.content}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Chat input box */}
           <div className='flex-shrink-0'>

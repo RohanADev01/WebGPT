@@ -4,7 +4,7 @@ import sidebarOpenArrow from '../img/sidebar_open_arrow.png';
 import sidebarCloseArrow from '../img/sidebar_close_arrow.png';
 import logo from '../img/logo.png';
 
-const Sidebar = ({ isOpen, toggleSidebar, currentModel, handleChangeModel, models }) => {
+const Sidebar = ({ isOpen, toggleSidebar, currentModel, handleChangeModel, models, clearChat }) => {
   return (
     <div className={`relative bg-[#171717] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <button className="toggle-btn" onClick={toggleSidebar}>
@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentModel, handleChangeModel, model
                 <input className='space-x-2 ml-1' type="text" />
               </div>
             )}
-            <button className='mt-4'>Clear Conversation</button>
+            <button className='mt-4 my-3 px-3 rounded-lg border-2 border-l-2 cursor-pointer border-white-100 text-white' onClick={clearChat}>Clear Chat</button>
           </div>
         </div>}
     </div>
