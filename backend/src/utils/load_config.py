@@ -13,7 +13,7 @@ class LoadConfig:
     Includes a method to load OpenAI Credentials.
   """
 
-  def __init__(self):
+  def __init__(self) -> None:
     with open(here("configs/app_config.yaml"), "r") as cfg:
       app_config = yaml.load(cfg, Loader=yaml.FullLoader)
     self.gpt_model = app_config["gpt_model"]
