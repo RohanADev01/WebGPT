@@ -10,7 +10,7 @@ from typing import List, Optional
 
 class WebSearch:
     @staticmethod
-    def get_web_search_results(
+    def retrieve_web_search_results(
         search_query: str, max_results: Optional[int] = 5
     ) -> List:
         """
