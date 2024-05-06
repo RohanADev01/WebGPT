@@ -16,7 +16,7 @@ class LoadConfig:
     """
 
     def __init__(self) -> None:
-        with open(here("configs/app_config.yaml"), "r") as cfg:
+        with open(here("src/configs/app_config.yml"), "r") as cfg:
             app_config = yaml.load(cfg, Loader=yaml.FullLoader)
         self.gpt_model = app_config["gpt_model"]
         self.temperature = app_config["temperature"]

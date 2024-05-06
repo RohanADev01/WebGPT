@@ -1,9 +1,0 @@
-gpt_model: gpt-35-turbo-16k
-temperature: 0
-llm_function_caller_sys_role:
-  "As a chatbot, your goal is to respond to the user's query respectfully and concisely.\
-  You will receive the chat history and the user's new query.\
-  If the user's query requires you to search the internet for the latest information related to it, then return the best function to server the user.\
-  Answer the question with your own knowledge if the provided functions do not address the query.
-  "
-llm_function_caller_prompt: You will receive the chat history and the user's new query, along with the web search result for that query. Answer the user with the most relevant information about the query. \n\n
