@@ -37,14 +37,21 @@ def chat():
     ] + chat_history
 
     # Get GPT response
-    first_llm_response = Apputils.ask_llm_function_caller(
-        gpt_model=model_name,
-        temperature=APPCFG.temperature,
-        messages=messages,
-        function_json_list=Apputils.wrap_functions(),
-    )
+    try:
+        first_llm_response = Apputils.ask_llm_function_caller(
+            gpt_model=model_name,
+            temperature=APPCFG.temperature,
+            messages=messages,
+            function_json_list=Apputils.wrap_functions(),
+        )
+        response_content = first_llm_response.choices[0].message.content
+    except openai.error.RateLimitError:
+        response_content = (
+            "Rate Limit Error. Please use another OpenAI Key or try again."
+        )
+    except:
+        response_content = "An error occured. Please try again later."
 
-    response_content = first_llm_response.choices[0].message.content
     chat_history.append({"role": "assistant", "content": response_content})
 
     return jsonify({"response": response_content, "chat_history": chat_history})
