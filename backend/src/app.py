@@ -49,8 +49,8 @@ def chat():
         response_content = (
             "Rate Limit Error. Please use another OpenAI Key or try again."
         )
-    except:
-        response_content = "An error occured. Please check you have the correct API Key or try again later."
+    except Exception as e:
+        response_content = f"An error occured. Please check you have the correct API key or try again later. {e}"
 
     chat_history.append({"role": "assistant", "content": response_content})
 
