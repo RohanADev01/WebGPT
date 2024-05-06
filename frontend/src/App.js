@@ -3,16 +3,14 @@ import Sidebar from './Dashboard/Sidebar';
 import Dashboard from './Dashboard/Dashboard';
 import axios from 'axios';
 import './App.css';
-import { backendURL } from './constants';
+import { backendURL, models } from './constants';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1140);
-  const [currentModel, setCurrentModel] = useState('gpt-3.5');
+  const [currentModel, setCurrentModel] = useState('gpt-3.5-turbo');
   const [chatHistory, setChatHistory] = useState([]);
-  // const [response, setResponse] = useState('');
   const [input, setInput] = useState("");
   const [openAIkey, setOpenAIKey] = useState("");
-  const models = ['gpt-3.5', 'gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo-16k', 'gpt-3.5-turbo-16k-0309', 'gpt-3.5-turbo-13b'];
 
   useEffect(() => {
     if (openAIkey !== "") {
@@ -50,7 +48,6 @@ function App() {
           'Content-Type': 'application/json',
         }
       });
-      // setResponse(response.data.response);
       setChatHistory(response.data.chat_history);
       setInput("");
     } catch (error) {
@@ -67,7 +64,6 @@ function App() {
         }
       });
       setChatHistory([]);
-      // setResponse("");
       setInput("");
     } catch (error) {
       console.error("Error clearing chat:", error);
