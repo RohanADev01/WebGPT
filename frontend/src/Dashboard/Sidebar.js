@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentModel, handleChangeModel, model
         <div className="px-5 py-8 w-72 flex-col">
           <div className='h-full px-2 py-10 flex-col justify-center items-center'>
             <h1 className='font-black justify-center items-center text-center text-2xl'>WebGPT</h1>
-            <h2 className='font-extrabold justify-center items-center text-center'>GPT Agent with access to the internet</h2>
+            <h2 className='font-medium justify-center items-center text-center'>A GPT Agent that addresses the problem of LLM Knowledge cut-off with real-time web search capabilities</h2>
             <div className='flex justify-center items-center mt-4'>
               <img className="justify-center items-center" src={logo} alt='logo' width='60%' height='60%'></img>
             </div>
