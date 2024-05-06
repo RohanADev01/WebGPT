@@ -1,12 +1,46 @@
-# Getting Started with Create React App
+# WebGPT Agent with Real-Time Web Search Capabilities
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+WebGPT is an advanced GPT agent that tackles the challenge of language model knowledge cut-off by integrating real-time web search capabilities. The project features both a frontend, developed using React, and a backend powered by Python.
 
-In the project directory, you can run:
+## Features
+**WebGPT** is a powerful tool enabling users to pose questions that require internet searches. Leveraging GPT Models it allows:
+* **Real-Time Web Search:** The agent uses web search to provide up-to-date information, and identifies and executes the most relevant given Python functions in response to user queries.
+* **Complex web search**: The web search supports diverse searches such as text, news, PDFs, images, videos, maps, and instant responses.
+* **Overcoming knowledge-cutoff limitations**: The chatbot delivers answers based on the latest internet content.
 
-### `npm start`
+## Application User Interface
+<div align="center">
+  <img src="images/ui.png" alt="UI">
+</div>
+
+## Project Schema
+<div align="center">
+  <img src="images/project_schema.png" alt="Schema">
+</div>
+
+## Prerequisites
+
+* **Node.js** (for frontend)
+* **Python 3** (for backend)
+
+## Frontend Setup
+
+#### 1. Navigate to the Frontend Directory:
+```
+cd frontend
+```
+
+#### 2. Install Dependencies:
+```
+npm install
+```
+
+#### 3. Start the Frontend:
+```
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -14,57 +48,23 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Backend Setup
+#### 1. Navigate to the Backend Directory:
+```
+cd backend
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 2. Install Dependencies:
+```
+pip install -r requirements.txt
+```
 
-### `npm run build`
+#### 3. Start the Backend:
+```
+python3 -m backend
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Usage
+1. **Open the Application:** Once the frontend and backend are running, open your browser and navigate to `http://localhost:3000`
+2. **Select Model:** Use the sidebar to select the desired model for the agent.
+3. **Start Interacting:** Type your queries and the agent will respond using both its built-in knowledge and real-time web search.
