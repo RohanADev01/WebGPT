@@ -13,6 +13,11 @@ function App() {
   const [openAIkey, setOpenAIKey] = useState("");
 
   useEffect(() => {
+    clearChat();
+
+    setChatHistory([]);
+    setInput("");
+
     if (openAIkey !== "") {
       fetchChatHistory();
     }
@@ -31,14 +36,18 @@ function App() {
         }
       })
       setChatHistory(response.data.chat_history);
+      console.log(response.data.chat_history);
     } catch (error) {
       console.error("Error fetching chat history, ", error);
     }
   }
 
-  const sendMessage = async () => {
+  const sendMessage = async (isSendEnabled) => {
+    if (!isSendEnabled) return;
+
     const url = `${backendURL}/api/chat`
     try {
+      console.log(input);
       const response = await axios.post(url, {
         user_input: input,
         model_name: currentModel,
@@ -103,7 +112,7 @@ function App() {
         <div className="absolute inset-x-0 top-0 h-2px bg-top-gradient-border"></div>
         <Sidebar clearChat={clearChat} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} currentModel={currentModel} handleChangeModel={handleChangeModel} models={models} handleChangeOpenAIKey={handleChangeOpenAIKey} />
         <div className="absolute inset-x-0 top-0 h-2px bg-top-gradient-border"></div>
-        <Dashboard currentModel={currentModel} chatHistory={chatHistory} sendMessage={sendMessage} openAIkey={openAIkey} />
+        <Dashboard currentModel={currentModel} chatHistory={chatHistory} sendMessage={sendMessage} openAIkey={openAIkey} setInput={setInput} input={input} />
       </div>
     </>
   );
