@@ -1,7 +1,6 @@
 # WebGPT Agent with Real-Time Web Search Capabilities
 
 ## Project Overview
-
 WebGPT is an advanced GPT agent that tackles the challenge of language model knowledge cut-off by integrating real-time web search capabilities. The project features both a frontend, developed using React, and a backend powered by Python.
 
 ## Features
@@ -21,12 +20,10 @@ WebGPT is an advanced GPT agent that tackles the challenge of language model kno
 </div>
 
 ## Prerequisites
-
 * **Node.js** (for frontend)
 * **Python 3** (for backend)
 
 ## Frontend Setup
-
 #### 1. Navigate to the Frontend Directory:
 ```
 cd frontend
@@ -56,12 +53,12 @@ cd backend
 
 #### 2. Install Dependencies:
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 #### 3. Start the Backend:
 ```
-python3 -m backend
+python3 app.py
 ```
 
 ## Usage
