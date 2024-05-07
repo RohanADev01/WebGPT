@@ -48,7 +48,7 @@ class Apputils:
         ]
 
     @staticmethod
-    def execute_json_function(response) -> List:
+    def execute_json_function(response) -> str:
         """
         Execute a function based on the response from an OpenAI ChatCompletion API call.
 
@@ -63,6 +63,7 @@ class Apputils:
             response.choices[0].message.function_call.arguments
         )
         # Call the function with the given arguments
+        result = None
         if func_name == "retrieve_web_search_results":
             result = WebSearch.retrieve_web_search_results(**func_args)
         elif func_name == "web_search_text":
@@ -81,7 +82,7 @@ class Apputils:
             result = WebSearch.web_search_map(**func_args)
         else:
             raise ValueError(f"Function '{func_name}' not found.")
-        return result
+        return json.dumps(result, indent=2)
 
     @staticmethod
     def ask_llm_function_caller(
@@ -100,7 +101,11 @@ class Apputils:
             The response object from the OpenAI ChatCompletion API call.
         """
         # Validate messages
-        valid_messages = [msg for msg in messages if msg.get("content") is not None]
+        valid_messages = [
+            msg
+            for msg in messages
+            if msg.get("content") is not None or "function_call" in msg
+        ]
 
         try:
             response = openai.ChatCompletion.create(

@@ -64,7 +64,12 @@ def chat():
             function_json_list=Apputils.wrap_functions(),
         )
         if "choices" in first_llm_response and first_llm_response["choices"]:
-            response_content = first_llm_response["choices"][0]["message"]["content"]
+            choice = first_llm_response["choices"][0]
+            if "function_call" in choice["message"]:
+                result = Apputils.execute_json_function(first_llm_response)
+                response_content = result
+            else:
+                response_content = choice["message"]["content"]
         else:
             response_content = "No valid response from the API."
     except openai.error.RateLimitError:
@@ -74,9 +79,7 @@ def chat():
     except openai.error.AuthenticationError:
         response_content = "Authentication error, please enter a valid Open AI api key!"
     except Exception as e:
-        response_content = (
-            f"Hey there! Please enter a correct API key or try again later. {e}"
-        )
+        response_content = f"An error occured. Please enter a correct API key or try again later. Error: {e}"
 
     chat_history.append({"role": "assistant", "content": response_content})
     session_histories[session_id] = chat_history
