@@ -14,6 +14,10 @@ WebGPT is an advanced GPT agent that tackles the challenge of language model kno
   <img src="images/ui.png" alt="UI">
 </div>
 
+<div align="center">
+  <img src="images/ui2.png" alt="UI">
+</div>
+
 ## Project Schema
 <div align="center">
   <img src="images/project_schema.png" alt="Schema">
