@@ -64,8 +64,7 @@ def chat():
             function_json_list=Apputils.wrap_functions(),
         )
         if "choices" in first_llm_response and first_llm_response["choices"]:
-            # response_content = first_llm_response["choices"][0]["message"]["content"]
-            response_content = str(first_llm_response)
+            response_content = first_llm_response["choices"][0]["message"]["content"]
         else:
             response_content = "No valid response from the API."
     except openai.error.RateLimitError:
@@ -91,7 +90,6 @@ def chat():
             "session_histories": session_histories,
         }
     )
-    # response.headers["session_id"] = session_id
     return response
 
 
