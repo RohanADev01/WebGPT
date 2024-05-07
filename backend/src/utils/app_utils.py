@@ -6,6 +6,7 @@ from pydantic import create_model
 from utils.web_search import WebSearch
 from typing import List, Dict
 import openai
+import logging
 
 
 class Apputils:
@@ -98,14 +99,24 @@ class Apputils:
         Returns:
             The response object from the OpenAI ChatCompletion API call.
         """
-        response = openai.ChatCompletion.create(
-            model=gpt_model,
-            messages=messages,
-            functions=function_json_list,
-            function_call="auto",
-            temperature=temperature,
-        )
-        return response
+        # Validate messages
+        valid_messages = [msg for msg in messages if msg.get("content") is not None]
+
+        try:
+            response = openai.ChatCompletion.create(
+                model=gpt_model,
+                messages=valid_messages,
+                functions=function_json_list,
+                function_call="auto",
+                temperature=temperature,
+            )
+            return response
+        except openai.error.InvalidRequestError as e:
+            logging.error(f"ask_llm_function_caller: InvalidRequestError: {e}")
+            return None
+        except Exception as e:
+            logging.error(f"An error occured: {e}")
+            return None
 
     @staticmethod
     def ask_llm_chatbot(gpt_model: str, temperature: float, messages: List):
