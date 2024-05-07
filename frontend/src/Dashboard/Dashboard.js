@@ -6,6 +6,7 @@ import { RiRobot2Line } from "react-icons/ri";
 
 const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => {
   const [sendEnabled, setSendEnabled] = useState(false);
+  const inputRef = useRef(null);
 
   function chatInputChange(e) {
     const inputValue = e.target.value;
@@ -15,6 +16,15 @@ const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => 
       setSendEnabled(false);
     }
     setInput(inputValue);
+  }
+
+  const handleKeyPress = (e) => {
+    if (sendEnabled && e.key === 'Enter') {
+      sendMessage(true);
+      setInput('');
+      setSendEnabled(false);
+      inputRef.current.focus();
+    }
   }
 
   return (
@@ -63,7 +73,7 @@ const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => 
               <div className="absolute top-0 h-2px bg-top-gradient-border w-full"></div>
             </div>
             <div className='flex flex-row rounded-br-lg rounded-bl-lg bg-app-bg border-t-white-100 border-t-2'>
-              <input onChange={(e) => chatInputChange(e)} value={input} className='outline-none bg-app-bg px-10 py-3 w-full rounded-br-lg rounded-bl-lg border-bl-2' type='text' placeholder='Enter your prompt here...' />
+              <input ref={inputRef} onKeyPress={handleKeyPress} onChange={(e) => chatInputChange(e)} value={input} className='outline-none bg-app-bg px-10 py-3 w-full rounded-br-lg rounded-bl-lg border-bl-2' type='text' placeholder='Enter your prompt here...' />
               <button onClick={() => sendMessage(sendEnabled)} className={`mx-2 my-3 px-3 rounded-lg border-2 border-l-2 ${sendEnabled ? 'cursor-pointer border-white-100 text-white' : 'cursor-not-allowed disabled border-gray-600 text-slate-600'}`}>
                 <div className='flex flex-row justify-center items-center'>
                   <IoMdSend />
