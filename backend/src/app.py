@@ -72,7 +72,7 @@ def chat():
             else:
                 response_content = choice["message"]["content"]
         else:
-            response_content = "No valid response from the API."
+            response_content = "No valid response from the API. Please check your OpenAI API key is correct."
     except openai.error.RateLimitError:
         response_content = (
             "Rate Limit Error. Please use another OpenAI Key or try again."
