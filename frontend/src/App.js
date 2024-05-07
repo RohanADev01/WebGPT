@@ -11,9 +11,20 @@ function App() {
   const [chatHistory, setChatHistory] = useState([]);
   const [input, setInput] = useState("");
   const [openAIkey, setOpenAIKey] = useState("");
+  const [sessionId, setSessionId] = useState(() => {
+    const savedSessionId = localStorage.getItem("session_id");
+    return savedSessionId || "";
+  });
+
+  const api = axios.create({
+    baseURL: backendURL,
+    withCredentials: true,  // Enable cookies
+  });
 
   useEffect(() => {
-    clearChat();
+    if (!sessionId) {
+      clearChat();
+    }
 
     setChatHistory([]);
     setInput("");
@@ -23,18 +34,31 @@ function App() {
     }
   }, [openAIkey]);
 
+
   const fetchChatHistory = async () => {
-    const url = `${backendURL}/api/chat`
     try {
-      const response = await axios.post(url, {
+      const response = await api.post('/api/chat', {
         user_input: "",
         model_name: currentModel,
         openai_api_key: openAIkey,
+        session_id: sessionId
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       })
+
+      console.log(response, response.data.session_id);
+      console.log(response, response.data.session_histories);
+
+      // Update session ID if a new one is created
+      if (response.data.session_id && response.data.session_id !== sessionId) {
+        const newSessionId = response.data.session_id;
+        setSessionId(newSessionId);
+        console.log("fetch chat history new session id: ", newSessionId);
+        localStorage.setItem("session_id", newSessionId);
+      }
+
       setChatHistory(response.data.chat_history);
       console.log(response.data.chat_history);
     } catch (error) {
@@ -45,18 +69,28 @@ function App() {
   const sendMessage = async (isSendEnabled) => {
     if (!isSendEnabled) return;
 
-    const url = `${backendURL}/api/chat`
     try {
-      console.log(input);
-      const response = await axios.post(url, {
+      const response = await api.post('/api/chat', {
         user_input: input,
         model_name: currentModel,
         openai_api_key: openAIkey,
+        session_id: sessionId,
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       });
+
+      console.log(sessionId, response.data.session_id);
+
+      // Update session ID if a new one is created
+      if (response.data.session_id && response.data.session_id !== sessionId) {
+        const newSessionId = response.data.session_id;
+        setSessionId(newSessionId);
+        console.log("send message new session id: ", newSessionId);
+        localStorage.setItem("session_id", newSessionId);
+      }
+
       setChatHistory(response.data.chat_history);
       setInput("");
     } catch (error) {
@@ -65,9 +99,8 @@ function App() {
   };
 
   const clearChat = async () => {
-    const url = `${backendURL}/api/clear`
     try {
-      await axios.post(url, {
+      await api.post('/api/clear', { session_id: sessionId }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -87,6 +120,8 @@ function App() {
         setIsSidebarOpen(true);
       }
     }
+
+    console.log(sessionId);
 
     window.addEventListener('resize', handleResize);
     return () => {
