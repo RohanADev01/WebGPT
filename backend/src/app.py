@@ -74,10 +74,9 @@ def chat():
     except openai.error.AuthenticationError:
         response_content = "Authentication error, please enter a valid Open AI api key!"
     except Exception as e:
-        # response_content = f"An error occured. Please check you have the correct API key or try again later. {e}"
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        response_content = f"{exc_type}||||||{fname}||||||{exc_tb.tb_lineno}"
+        response_content = (
+            f"Hey there! Please enter a correct API key or try again later. {e}"
+        )
 
     chat_history.append({"role": "assistant", "content": response_content})
     session_histories[session_id] = chat_history

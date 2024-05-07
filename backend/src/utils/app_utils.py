@@ -11,22 +11,22 @@ import logging
 
 class Apputils:
     @staticmethod
-    def jsonschema(func) -> Dict:
+    def jsonschema(f) -> Dict:
         """
         Generate JSON schema for the input parameters of the given function.
 
         Parameters:
-            func (FunctionType): The function for which to generate the JSON schema.
+            f (FunctionType): The function for which to generate the JSON schema.
 
         Returns:
             Dict: A dictionary containing the function name, description, and parameters schema.
         """
         kw = {
             n: (o.annotation, ... if o.default == Parameter.empty else o.default)
-            for n, o in inspect.signature(func).parameters.items()
+            for n, o in inspect.signature(f).parameters.items()
         }
-        s = create_model(f"Input for `{func.__name__}`", **kw).schema()
-        return dict(name=func.__name__, description=func.__doc__, parameters=s)
+        s = create_model(f"Input for `{f.__name__}`", **kw).schema()
+        return dict(name=f.__name__, description=f.__doc__, parameters=s)
 
     @staticmethod
     def wrap_functions() -> List:
