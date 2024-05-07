@@ -29,9 +29,7 @@ function App() {
     setChatHistory([]);
     setInput("");
 
-    if (openAIkey !== "") {
-      fetchChatHistory();
-    }
+    fetchChatHistory();
   }, [openAIkey]);
 
 
