@@ -7,6 +7,7 @@ import { RiRobot2Line } from "react-icons/ri";
 const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => {
   const [sendEnabled, setSendEnabled] = useState(false);
   const inputRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
   function chatInputChange(e) {
     const inputValue = e.target.value;
@@ -24,8 +25,19 @@ const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => 
       setInput('');
       setSendEnabled(false);
       inputRef.current.focus();
+      scrollToBottom();
     }
   }
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory]);
 
   return (
     <div className="flex-1 px-14 py-8 bg-app-bg">
@@ -33,7 +45,7 @@ const Dashboard = ({ chatHistory, sendMessage, openAIkey, setInput, input }) => 
         {/* Chat Area */}
         <div className='flex flex-col border-white-100 border-2 h-full rounded-lg'>
           {openAIkey !== "" ?
-            (<div className='p-10 flex-grow overflow-scroll'>
+            (<div ref={chatContainerRef} className='p-10 flex-grow overflow-scroll'>
               <h1 className='font-bold mb-10 text-xl chat-title'>Chat History</h1>
               {/* Main content area. */}
               <div className="flex flex-col gap-4">
