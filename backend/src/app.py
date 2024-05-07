@@ -51,9 +51,10 @@ def chat():
     else:
         chat_history.append({"role": "user", "content": ""})
 
-    messages = [
-        {"role": "system", "content": APPCFG.llm_function_caller_sys_role}
-    ] + chat_history
+    messages = [{"role": "system", "content": APPCFG.llm_function_caller_sys_role}]
+
+    if chat_history is not None:
+        messages = messages + chat_history
 
     # Get GPT response
     try:
@@ -79,7 +80,7 @@ def chat():
     except openai.error.AuthenticationError:
         response_content = "Authentication error, please enter a valid Open AI api key!"
     except Exception as e:
-        response_content = f"An error occured. Please enter a correct API key or try again later. Error: {e}"
+        response_content = f"An error occured: {e}"
 
     chat_history.append({"role": "assistant", "content": response_content})
     session_histories[session_id] = chat_history

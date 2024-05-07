@@ -101,11 +101,12 @@ class Apputils:
             The response object from the OpenAI ChatCompletion API call.
         """
         # Validate messages
-        valid_messages = [
-            msg
-            for msg in messages
-            if msg.get("content") is not None or "function_call" in msg
-        ]
+        if messages != None:
+            valid_messages = [
+                msg
+                for msg in messages
+                if msg.get("content") is not None or "function_call" in msg
+            ]
 
         try:
             response = openai.ChatCompletion.create(
@@ -118,10 +119,10 @@ class Apputils:
             return response
         except openai.error.InvalidRequestError as e:
             logging.error(f"ask_llm_function_caller: InvalidRequestError: {e}")
-            return None
+            return []
         except Exception as e:
             logging.error(f"An error occured: {e}")
-            return None
+            return []
 
     @staticmethod
     def ask_llm_chatbot(gpt_model: str, temperature: float, messages: List):
